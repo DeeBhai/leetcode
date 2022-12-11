@@ -1,0 +1,54 @@
+/** https://leetcode.com/problems/roman-to-integer/ **/
+class Solution {
+public:
+    int romanToInt(string s) {
+        map<char, int> roman_val;
+        roman_val.insert(std::make_pair('I', 1));
+        roman_val.insert(std::make_pair('V', 5));
+        roman_val.insert(std::make_pair('X', 10));
+        roman_val.insert(std::make_pair('L', 50));
+        roman_val.insert(std::make_pair('C', 100));
+        roman_val.insert(std::make_pair('D', 500));
+        roman_val.insert(std::make_pair('M', 1000));
+        int num=0;
+        int size = s.length();
+        for(int idx=0;idx<size;idx++){
+            switch(s[idx]){
+                case 'M': num = num+roman_val[s[idx]];
+                    break;
+                case 'D': num = num+roman_val[s[idx]];
+                    break;
+                case 'C': if( (idx<size-1) && ((s[idx+1]=='M') || s[idx+1]=='D') ) {
+                        idx+=1;
+                        num=num+roman_val[s[idx]]-roman_val['C'];
+                    }
+                    else {
+                        num+=roman_val[s[idx]];
+                    }
+                    break;
+                case 'L': 
+                        num+=roman_val[s[idx]];
+                    break;
+                case 'X': if( (idx<size-1) && ((s[idx+1]=='L') || s[idx+1]=='C') ) {
+                        idx+=1;
+                        num=num+roman_val[s[idx]]-roman_val['X'];    
+                    }
+                    else {
+                        num+=roman_val[s[idx]];
+                    }
+                    break;
+                case 'V': num += roman_val[s[idx]];
+                    break;
+                case 'I': if( (idx<size-1) && ((s[idx+1]=='V') || s[idx+1]=='X') ) {
+                        idx+=1;
+                        num=num+roman_val[s[idx]]-roman_val['I'];
+                    }
+                    else {
+                        num+=roman_val[s[idx]];
+                    }
+                    break;
+            }
+        }
+        return num;
+    }
+};
