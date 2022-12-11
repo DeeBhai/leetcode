@@ -1,0 +1,28 @@
+/** https://leetcode.com/problems/ransom-note/ **/
+
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        map<char, int> magch;
+        for(auto each: magazine) {
+            magch[each]+=1;
+        }
+
+        for(auto each: ransomNote) {
+            if(magch.find(each)!=magch.end()) {
+                if(magch[each]>0) {
+                    magch[each]-=1;
+                }
+                else {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+};
